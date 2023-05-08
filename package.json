@@ -1,0 +1,19 @@
+{
+  "name": "twitter-clone-project-",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ibrahimfevzi/Twitter-Clone-Project-.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ibrahimfevzi/Twitter-Clone-Project-/issues"
+  },
+  "homepage": "https://github.com/ibrahimfevzi/Twitter-Clone-Project-#readme"
+}
