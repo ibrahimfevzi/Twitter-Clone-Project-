@@ -1,7 +1,7 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 import "../App.css";
 
@@ -12,9 +12,17 @@ export default function Signup() {
     formState: { errors },
   } = useForm();
 
+  const history = useNavigate();
+
   const onSubmit = (data) => {
     alert(JSON.stringify(data));
-    window.location.href = "/login"; // Sayfayı doğrudan yönlendiriyoruz
+    axios
+      .post("https://wit-courses-api2.onrender.com/signup", data)
+      .then((res) => {
+        console.log(res.data);
+        history("/login");
+      })
+      .catch((error) => console.log(error.response));
   };
 
   return (
@@ -22,28 +30,38 @@ export default function Signup() {
       <label>Name</label>
       <input
         {...register("firstName", {
-          required: true,
-          maxLength: 20,
-          pattern: /^[A-Za-z]+$/i,
+          required: "This field is required",
+          maxLength: {
+            value: 20,
+            message: "First name cannot exceed 20 characters",
+          },
+          pattern: {
+            value: /^[A-Za-z]+$/i,
+            message: "Alphabetical characters only",
+          },
         })}
       />
-      {errors?.firstName?.type === "required" && <p>This field is required</p>}
-      {errors?.firstName?.type === "maxLength" && (
-        <p>First name cannot exceed 20 characters</p>
-      )}
-      {errors?.firstName?.type === "pattern" && (
-        <p>Alphabetical characters only</p>
-      )}
+      {errors.firstName && <p>{errors.firstName.message}</p>}
       <label>Email</label>
-      <input type="email" {...register("email", { pattern: /^[A-Za-z]+$/i })} />
-      {errors?.lastName?.type === "pattern" && (
-        <p>Alphabetical characters only</p>
-      )}
+      <input
+        type="email"
+        {...register("email", {
+          required: "This field is required",
+          pattern: {
+            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+            message: "Invalid email address",
+          },
+        })}
+      />
+      {errors.email && <p>{errors.email.message}</p>}
       <label>Password</label>
-      <input type="password" {...register("password")} />
+      <input
+        type="password"
+        {...register("password", { required: "This field is required" })}
+      />
+      {errors.password && <p>{errors.password.message}</p>}
       <input type="submit" value="KAYIT OL" />
-      <Link to="/login">Go to Login</Link>{" "}
-      {/* Yönlendirme için Link bileşenini kullanıyoruz */}
+      <Link to="/login">Go to Login</Link>
     </form>
   );
 }
