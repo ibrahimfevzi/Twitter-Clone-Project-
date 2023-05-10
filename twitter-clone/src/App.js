@@ -5,7 +5,6 @@ import { Route, Routes } from "react-router-dom";
 import EntryList from "./components/EntryList";
 import Entry from "./components/Entry";
 
-import PrivateRoute from "./components/PrivateRoute";
 function App() {
   return (
     <div className="App">

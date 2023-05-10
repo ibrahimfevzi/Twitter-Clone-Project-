@@ -20,7 +20,10 @@ export default function Signup() {
       .post("https://wit-courses-api2.onrender.com/signup", data)
       .then((res) => {
         console.log(res.data);
-        history("/login");
+        if (res.status === 200) {
+          localStorage.setItem("s11g2_0223", res.data.token);
+          history("/login");
+        }
       })
       .catch((error) => console.log(error.response));
   };
