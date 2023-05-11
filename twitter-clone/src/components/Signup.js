@@ -2,6 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { myAxios } from "./Auth";
 
 import "../App.css";
 
@@ -16,7 +17,7 @@ export default function Signup() {
 
   const onSubmit = (data) => {
     alert(JSON.stringify(data));
-    axios
+    myAxios()
       .post("https://wit-courses-api2.onrender.com/signup", data)
       .then((res) => {
         console.log(res.data);
@@ -32,7 +33,7 @@ export default function Signup() {
     <form onSubmit={handleSubmit(onSubmit)}>
       <label>Name</label>
       <input
-        {...register("firstName", {
+        {...register("name", {
           required: "This field is required",
           maxLength: {
             value: 20,
@@ -44,7 +45,7 @@ export default function Signup() {
           },
         })}
       />
-      {errors.firstName && <p>{errors.firstName.message}</p>}
+      {errors.name && <p>{errors.name.message}</p>}
       <label>Email</label>
       <input
         type="email"
